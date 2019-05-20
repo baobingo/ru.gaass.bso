@@ -1,0 +1,9 @@
+server:
+  port: 8081
+spring:
+  data:
+    mongodb:
+      database: customassistance
+      host: localhost
+    rest:
+      base-path: /api

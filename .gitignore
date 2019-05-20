@@ -1,0 +1,20 @@
+**/.idea
+**.iml
+**/target
+**/node_modules
+**/*.exe
+**/*.txt
+**/**.gz
+  
+# Maven
+**/log/
+**/target/
+
+#Gradle
+**/build/
+**/gradle/
+**/.gradle/
+
+#common
+**/out
+**.class
