@@ -10,6 +10,7 @@ import ru.gaass.bso.customassistantapi.domain.Shipment;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -28,7 +29,7 @@ public class ShipmentsChangelog {
 
         shipment.setPriority(0);
         shipment.setCompleted(completed);
-        shipment.setCreatedDate(new Date());
+        shipment.setCreatedDate(ZonedDateTime.now());
         shipment.setBrand(brands.get(ThreadLocalRandom.current().nextInt(0, 10)));
         shipment.setStatus("Notes of current status");
         shipment.setCustoms(customs.get(ThreadLocalRandom.current().nextInt(0, 3)));
@@ -36,11 +37,11 @@ public class ShipmentsChangelog {
         shipment.setInvoiceCurrency(currencies.get(ThreadLocalRandom.current().nextInt(0, 2)));
         shipment.setTaxAmount(new BigDecimal(ThreadLocalRandom.current().nextDouble(10000.00, 100000.00)).setScale(2, RoundingMode.CEILING));
         shipment.setVatAmount(new BigDecimal(ThreadLocalRandom.current().nextDouble(10000.00, 100000.00)).setScale(2, RoundingMode.CEILING));
-        shipment.setEtaCustoms(new Date());
+        shipment.setEtaCustoms(ZonedDateTime.now());
         shipment.setExtInvoiceNumber("#" + ThreadLocalRandom.current().nextInt(1000000, 10000000));
         shipment.setNotes("Some common notes");
-        shipment.setIntInvoiceNumber("#" + ThreadLocalRandom.current().nextInt(1000000, 10000000));
-        shipment.setEtaWarehouse(new Date());
+        shipment.setInternalInvoiceNumber("#" + ThreadLocalRandom.current().nextInt(1000000, 10000000));
+        shipment.setEtaWarehouse(ZonedDateTime.now());
         shipment.setCargoDimensions("Dimensions");
         shipment.setLocalDelivery("Self delivery");
 

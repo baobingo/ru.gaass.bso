@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Document(collection = "shipments")
@@ -18,8 +19,7 @@ public class Shipment {
 
     private int priority;//pay priority
     private boolean completed;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private Date createdDate;
+    private ZonedDateTime createdDate;
 
     private Brand brand;
     private String status;
@@ -30,14 +30,12 @@ public class Shipment {
     private BigDecimal taxAmount;//always in RUB
     private BigDecimal vatAmount;//always in RUB
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private Date etaCustoms;
+    private ZonedDateTime etaCustoms;
     private String extInvoiceNumber;
     private String notes;
 
-    private String intInvoiceNumber;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private Date etaWarehouse;
+    private String internalInvoiceNumber;
+    private ZonedDateTime etaWarehouse;
     private String cargoDimensions;
     private String localDelivery;
 }

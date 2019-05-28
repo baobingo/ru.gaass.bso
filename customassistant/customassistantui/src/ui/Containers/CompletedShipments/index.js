@@ -59,7 +59,7 @@ const rows = [
     { id: 'etaCustoms', numeric: false, disablePadding: false, label: 'ETA to custom', sortDisable: false  },
     { id: 'extInvoiceNumber', numeric: false, disablePadding: false, label: 'Ext. invoice #', sortDisable: false  },
     { id: 'notes', numeric: false, disablePadding: false, label: '', sortDisable: false  },
-    { id: 'intInvoiceNumber', numeric: false, disablePadding: false, label: 'Int. invoice #', sortDisable: false  },
+    { id: 'internalInvoiceNumber', numeric: false, disablePadding: false, label: 'Int. invoice #', sortDisable: false  },
     { id: 'etaWarehouse', numeric: false, disablePadding: false, label: 'ETA to warehouse', sortDisable: false  },
     { id: 'cargoDimensions', numeric: false, disablePadding: false, label: '', sortDisable: false  },
     { id: 'localDelivery', numeric: false, disablePadding: false, label: 'Local delivery', sortDisable: false  },
@@ -367,7 +367,7 @@ class EnhancedTable extends React.Component {
                                                     </ExpansionPanelDetails>
                                                 </ExpansionPanel>
                                             </TableCell>
-                                            <TableCell align="right">{row.intInvoiceNumber}</TableCell>
+                                            <TableCell align="right">{row.internalInvoiceNumber}</TableCell>
                                             <TableCell align="right">{row.etaWarehouse.substring(0, 10)}</TableCell>
                                             <TableCell align="right">
                                                 <ExpansionPanel className={classes.expansionpanel}>

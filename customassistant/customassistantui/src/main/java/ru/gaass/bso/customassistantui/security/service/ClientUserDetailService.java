@@ -4,6 +4,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import ru.gaass.bso.customassistantui.security.dto.UserAccount;
 
 
 @Component
-public class ClientUserDetailService{
+public class ClientUserDetailService implements UserDetailsService {
 
     private RestTemplate restTemplate;
     private ConfigProperties configProperties;
@@ -24,6 +25,7 @@ public class ClientUserDetailService{
         this.configProperties = configProperties;
     }
 
+    @Override
     @HystrixCommand(fallbackMethod = "UserServiceUnreachable", groupKey = "UserService")
     public UserDetails loadUserByUsername(String s){
         try {

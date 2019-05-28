@@ -201,7 +201,7 @@ class UpcomingShipments extends React.Component{
                                             </ExpansionPanelDetails>
                                         </ExpansionPanel>
                                     </TableCell>
-                                    <TableCell align="right">{row.intInvoiceNumber}</TableCell>
+                                    <TableCell align="right">{row.internalInvoiceNumber}</TableCell>
                                     <TableCell align="right">{row.etaWarehouse.substring(0, 10)}</TableCell>
                                     <TableCell align="right">
                                         <ExpansionPanel className={classes.expansionpanel}>

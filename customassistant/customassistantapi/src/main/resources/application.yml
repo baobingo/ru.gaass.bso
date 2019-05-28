@@ -3,7 +3,7 @@ server:
 spring:
   data:
     mongodb:
-      database: customassistance
+      database: customassistant
       host: localhost
     rest:
       base-path: /api
