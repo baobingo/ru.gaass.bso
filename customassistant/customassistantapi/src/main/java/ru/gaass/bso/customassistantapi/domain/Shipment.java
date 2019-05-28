@@ -4,11 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 @Document(collection = "shipments")
 @Data

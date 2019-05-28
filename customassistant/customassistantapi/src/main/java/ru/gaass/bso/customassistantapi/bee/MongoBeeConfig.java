@@ -10,16 +10,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @Configuration
 public class MongoBeeConfig {
 
-    private MongoClient mongo;
-    private MongoTemplate mongoTemplate;
-
-    public MongoBeeConfig(MongoClient mongo, MongoTemplate mongoTemplate) {
-        this.mongo = mongo;
-        this.mongoTemplate = mongoTemplate;
-    }
-
     @Bean
-    public Mongobee mongobee(final Environment environment) {
+    public Mongobee mongobee(final Environment environment, MongoClient mongo, MongoTemplate mongoTemplate) {
         Mongobee runner = new Mongobee(mongo);
         runner.setDbName(mongoTemplate.getMongoDbFactory().getDb().getName());
         runner.setChangeLogsScanPackage("ru.gaass.bso.customassistantapi.bee.changelog");
