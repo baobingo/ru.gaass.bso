@@ -9,16 +9,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private ClientAuthenticationProvider clientAuthenticationProvider;
-    private CustomAuthFailureHandler customAuthFailureHandler;
 
-    public SecurityConfiguration(ClientAuthenticationProvider clientAuthenticationProvider, CustomAuthFailureHandler customAuthFailureHandler) {
+    public SecurityConfiguration(ClientAuthenticationProvider clientAuthenticationProvider) {
         this.clientAuthenticationProvider = clientAuthenticationProvider;
-        this.customAuthFailureHandler = customAuthFailureHandler;
     }
 
     @Override
@@ -28,7 +28,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/bundle.js", "/login**","/images/**").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").failureHandler(customAuthFailureHandler)
+                .and().formLogin().loginPage("/login")
+                .failureHandler((request, response, exception)->{
+                            response.addHeader("Autherror", exception.getMessage());
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        })
                 .and().logout()
                 .and().sessionManagement().disable();
     }

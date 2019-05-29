@@ -3,15 +3,7 @@ zuul:
     api:
       path: /api/**
       url: http://localhost:8081/api
-#security:
-#  oauth2:
-#    client:
-#      clientId:
-#      clientSecret:
-#      accessTokenUri: https://oauth.yandex.ru/token
-#      userAuthorizationUri: https://oauth.yandex.ru/authorize
-#      tokenName: oauth_token
-#      authenticationScheme: query
-#      clientAuthenticationScheme: form
-#    resource:
-#      userInfoUri: https://login.yandex.ru/info
+
+resttemplate:
+  connectiontimeout: 2
+  readtimeout: 3

@@ -6,11 +6,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import javax.validation.Valid;
+
 @Configuration
 @PropertySource("classpath:application.yml")
-@ConfigurationProperties(prefix = "zuul.routes.api")
+@ConfigurationProperties(prefix = "resttemplate")
 @Getter
 @Setter
-public class ConfigProperties {
-    private String url;
+public class RestTemplateConfigProperties {
+    @Valid
+    private int connectiontimeout;
+    @Valid
+    private int readtimeout;
 }

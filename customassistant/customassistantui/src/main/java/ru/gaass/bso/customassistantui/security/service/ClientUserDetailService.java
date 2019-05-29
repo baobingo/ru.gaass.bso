@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import ru.gaass.bso.customassistantui.config.ConfigProperties;
+import ru.gaass.bso.customassistantui.config.ZuulConfigProperties;
 import ru.gaass.bso.customassistantui.security.dto.UserAccount;
 
 
@@ -18,18 +18,18 @@ import ru.gaass.bso.customassistantui.security.dto.UserAccount;
 public class ClientUserDetailService implements UserDetailsService {
 
     private RestTemplate restTemplate;
-    private ConfigProperties configProperties;
+    private ZuulConfigProperties zuulConfigProperties;
 
-    public ClientUserDetailService(RestTemplate restTemplate, ConfigProperties configProperties) {
+    public ClientUserDetailService(RestTemplate restTemplate, ZuulConfigProperties zuulConfigProperties) {
         this.restTemplate = restTemplate;
-        this.configProperties = configProperties;
+        this.zuulConfigProperties = zuulConfigProperties;
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "UserServiceUnreachable", groupKey = "UserService")
     public UserDetails loadUserByUsername(String s){
         try {
-            UserAccount userAccount = restTemplate.getForObject(configProperties.getUrl()+"/userAccounts/search/findByUsername?username={s}",
+            UserAccount userAccount = restTemplate.getForObject(zuulConfigProperties.getUrl()+"/userAccounts/search/findByUsername?username={s}",
                     UserAccount.class, s);
             return userAccount;
         }catch (RestClientException e){
@@ -38,7 +38,10 @@ public class ClientUserDetailService implements UserDetailsService {
     }
 
     public UserDetails UserServiceUnreachable(String s){
-        return User.builder().username("cduj20u9j239fuc0j23").password(new BCryptPasswordEncoder().encode("jdx823ucdpj23ucdn2ul3cj238")).authorities(new SimpleGrantedAuthority("user")).build();
+        return User.builder().username("cduj20u9j239fuc0j23")
+                .password(new BCryptPasswordEncoder()
+                        .encode("jdx823ucdpj23ucdn2ul3cj238"))
+                .authorities(new SimpleGrantedAuthority("user")).build();
     }
 
 }
