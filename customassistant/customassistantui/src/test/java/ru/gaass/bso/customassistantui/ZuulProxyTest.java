@@ -12,8 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 class ZuulProxyTest {
@@ -36,20 +35,13 @@ class ZuulProxyTest {
     @WithMockUser("admin")
     public void givenAuthRequestOnPrivateService_shouldSucceedWith200() throws Exception {
         mvc.perform(get("http://localhost:8080/api/").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(content().string("{\r\n" +
-                "  \"_links\" : {\r\n" +
-                "    \"shipments\" : {\r\n" +
-                "      \"href\" : \"http://localhost:8081/api/shipments{?page,size,sort}\",\r\n" +
-                "      \"templated\" : true\r\n" +
-                "    },\r\n" +
-                "    \"userAccounts\" : {\r\n" +
-                "      \"href\" : \"http://localhost:8081/api/userAccounts{?page,size,sort}\",\r\n" +
-                "      \"templated\" : true\r\n" +
-                "    },\r\n" +
-                "    \"profile\" : {\r\n" +
-                "      \"href\" : \"http://localhost:8081/api/profile\"\r\n" +
-                "    }\r\n" +
-                "  }\r\n" +
-                "}"));
+                .andExpect(status().isOk()).andExpect(jsonPath("$._links").exists());
+    }
+
+    @Test
+    @WithMockUser("admin")
+    public void findByUsername() throws Exception{
+        mvc.perform(get("http://localhost:8080/api/userAccounts/search/findByUsername?username=admin").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.username").value("admin"));
     }
 }
