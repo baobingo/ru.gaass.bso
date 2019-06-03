@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import T from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -227,7 +227,7 @@ class UpcomingShipments extends React.Component{
 }
 
 UpcomingShipments.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: T.object.isRequired,
 };
 
 export default withStyles(styles)(UpcomingShipments);

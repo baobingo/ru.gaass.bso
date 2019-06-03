@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import PropTypes from 'prop-types';
+import T from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-import Client from "rest";
+import {login} from "./rest";
 
 const primary = red[500];
 const styles = theme => ({
@@ -64,38 +64,24 @@ class Login extends Component{
             username: '',
             password: '',
             message: ''
-        }
-
-        this.handleSubmit = this.handleSubmit.bind(this);
+        };
     }
 
 
-    handleSubmit(e){
+    handleSubmit = (e) => {
+
+        e.preventDefault();
+
         const formData = new FormData(document.querySelector('form'));
         const data = new URLSearchParams();
 
-        for (const [key, value]  of formData.entries()) {
-            data.append(key, value);
-        }
+        formData.forEach((value, key) => data.append(key, value));
 
-
-        Client({method: 'POST',
-            path: '/login',
-            entity: data.toString(),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-        }). done(response => {
-            if(response.status.code === 401) {
-                this.setState({message: response.headers.Autherror});
-            }
-            if(response.status.code === 200){
-                window.location = "/";
-            }
+        login(data).done(response => {
+            if (response.status.code === 200) window.location = "/";
+            response.status.code === 401 && this.setState({message: response.headers.Autherror});
         });
-
-        e.preventDefault();
-    }
+    };
 
     render() {
 
@@ -142,7 +128,7 @@ class Login extends Component{
 }
 
 Login.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: T.object.isRequired,
 };
 
 export default withStyles(styles)(Login);

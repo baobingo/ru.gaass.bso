@@ -1,5 +1,5 @@
 import React,{ useState } from 'react';
-import PropTypes from 'prop-types';
+import T from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -24,7 +24,7 @@ function TabContainer(props) {
 }
 
 TabContainer.propTypes = {
-    children: PropTypes.node.isRequired,
+    children: T.node.isRequired,
 };
 
 const styles = theme => ({
@@ -177,7 +177,7 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: T.object.isRequired,
 };
 
 export default withStyles(styles)(Main);

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import T from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -220,7 +220,7 @@ class TopAppBar extends React.Component {
 }
 
 TopAppBar.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: T.object.isRequired,
 };
 
 export default withStyles(styles)(TopAppBar);

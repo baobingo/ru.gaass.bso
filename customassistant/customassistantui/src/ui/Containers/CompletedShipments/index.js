@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import T from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -115,12 +115,12 @@ class EnhancedTableHead extends React.Component {
 }
 
 EnhancedTableHead.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.string.isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
+    numSelected: T.number.isRequired,
+    onRequestSort: T.func.isRequired,
+    onSelectAllClick: T.func.isRequired,
+    order: T.string.isRequired,
+    orderBy: T.string.isRequired,
+    rowCount: T.number.isRequired,
 };
 
 const toolbarStyles = theme => ({
@@ -188,8 +188,8 @@ let EnhancedTableToolbar = props => {
 };
 
 EnhancedTableToolbar.propTypes = {
-    classes: PropTypes.object.isRequired,
-    numSelected: PropTypes.number.isRequired,
+    classes: T.object.isRequired,
+    numSelected: T.number.isRequired,
 };
 
 EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
@@ -414,7 +414,7 @@ class EnhancedTable extends React.Component {
 }
 
 EnhancedTable.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: T.object.isRequired,
 };
 
 export default withStyles(styles)(EnhancedTable);

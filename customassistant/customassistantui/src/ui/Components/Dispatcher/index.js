@@ -5,8 +5,8 @@ import Login from '../Login'
 
 const Dispatcher = () => (
         <Switch>
-            <Route exact path="/" component={Main}></Route>
-            <Route path="/login" component={Login}></Route>
+            <Route exact path="/" component={Main}/>
+            <Route path="/login" component={Login}/>
         </Switch>
 );
 
