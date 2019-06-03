@@ -14,7 +14,6 @@ public class UserDto {
     private String username;
     @NotNull
     private String password;
-
     private List<RoleDto> roles;
 
     public Optional<UserDetails> get(){

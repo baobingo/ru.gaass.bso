@@ -1,7 +1,8 @@
 package ru.gaass.bso.customassistantui.security.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import org.modelmapper.ModelMapper;
+import feign.Feign;
+import feign.jackson.JacksonDecoder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 import ru.gaass.bso.customassistantui.config.ZuulConfigProperties;
 import ru.gaass.bso.customassistantui.security.dto.UserDto;
 
@@ -18,24 +17,23 @@ import ru.gaass.bso.customassistantui.security.dto.UserDto;
 @Component
 public class ClientUserDetailService implements UserDetailsService {
 
-    private RestTemplate restTemplate;
     private ZuulConfigProperties zuulConfigProperties;
-    private ModelMapper modelMapper;
+    private UserFeignClient userFeignClient;
 
-    public ClientUserDetailService(RestTemplate restTemplate, ZuulConfigProperties zuulConfigProperties, ModelMapper modelMapper) {
-        this.restTemplate = restTemplate;
+    public ClientUserDetailService(ZuulConfigProperties zuulConfigProperties) {
         this.zuulConfigProperties = zuulConfigProperties;
-        this.modelMapper = modelMapper;
+        userFeignClient = Feign.builder()
+                .decoder(new JacksonDecoder())
+                .target(UserFeignClient.class, zuulConfigProperties.getUrl()+"/userAccounts/search");
     }
 
     @Override
     @HystrixCommand(fallbackMethod = "UserServiceUnreachable", groupKey = "UserService")
     public UserDetails loadUserByUsername(String s){
-        try {
-            UserDto userDto = restTemplate.getForObject(zuulConfigProperties.getUrl()+"/userAccounts/search/findByUsername?username={s}",
-                    UserDto.class, s);
+        try{
+            UserDto userDto = userFeignClient.findByUserName(s);
             return userDto.get().orElseThrow();
-        }catch (RestClientException e){
+        }catch (Exception e){
             throw new UsernameNotFoundException("Bad credentials.");
         }
     }
