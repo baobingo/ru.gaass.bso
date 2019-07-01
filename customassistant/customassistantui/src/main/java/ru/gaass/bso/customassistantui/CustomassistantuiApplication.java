@@ -17,7 +17,7 @@ public class CustomassistantuiApplication {
 		SpringApplication.run(CustomassistantuiApplication.class, args);
 	}
 
-	@RequestMapping(value = "/{[path:[^\\.]*}")
+	@RequestMapping(value = {"/{[path:[^.]*}","/{[path:[^.]*}/{[path:[^.]*}"})
 	public String forward() {
 		return "forward:/";
 	}
